@@ -17,7 +17,31 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void wyswietl_cyfre(int n);
+
+    void on_p1_clicked();
+
+    void on_p0_clicked();
+
+    void on_p2_clicked();
+
+    void on_p3_clicked();
+
+    void on_p4_clicked();
+
+    void on_p5_clicked();
+
+    void on_p6_clicked();
+
+    void on_p7_clicked();
+
+    void on_p8_clicked();
+
+    void on_p9_clicked();
+
 private:
+    int wyswietlona_liczba = 0;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H
