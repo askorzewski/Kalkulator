@@ -169,6 +169,12 @@
        <property name="text">
         <string>9</string>
        </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
       </widget>
      </item>
      <item row="5" column="2">
@@ -232,7 +238,7 @@
       </widget>
      </item>
      <item row="5" column="0">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pClear">
        <property name="font">
         <font>
          <pointsize>28</pointsize>
@@ -244,7 +250,7 @@
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pBack">
        <property name="font">
         <font>
          <pointsize>26</pointsize>

@@ -68,3 +68,17 @@ void MainWindow::on_p9_clicked()
     wyswietl_cyfre(9);
 }
 
+void MainWindow::on_pBack_clicked()
+{
+    wyswietlona_liczba = wyswietlona_liczba / 10;
+    ui->wyswietlacz->display(wyswietlona_liczba);
+}
+
+void MainWindow::on_pClear_clicked()
+{
+    wyswietlona_liczba = 0;
+    kalkulator.kasuj();
+    ui->wyswietlacz->display(wyswietlona_liczba);
+}
+
+

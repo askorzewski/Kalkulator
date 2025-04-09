@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "kalkulator.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -40,7 +41,12 @@ private slots:
 
     void on_p9_clicked();
 
+    void on_pBack_clicked();
+
+    void on_pClear_clicked();
+
 private:
+    Kalkulator kalkulator;
     int wyswietlona_liczba = 0;
     Ui::MainWindow *ui;
 };
