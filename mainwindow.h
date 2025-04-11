@@ -45,9 +45,31 @@ private slots:
 
     void on_pClear_clicked();
 
+    void on_pPlus_clicked();
+
+    void on_pKropka_clicked();
+
+    void on_pWynik_clicked();
+
+    void oblicz(int tryb);
+
+    void on_pMinus_clicked();
+
+    void on_pMnozenie_clicked();
+
+    void on_pDziel_clicked();
+
+    void on_pModulo_clicked();
+
 private:
+    //enum Tryb {plus, minus, iloraz, iloczyn, modulo};
+    //Tryb tryb;
+    int tryb = 0;
+    bool blokuj_liczenie = 0;
     Kalkulator kalkulator;
-    int wyswietlona_liczba = 0;
+    bool czy_kropka = 0;
+    int miejsce_kropki = 1;
+    double wyswietlona_liczba = 0;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

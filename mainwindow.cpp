@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <cmath>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,8 +15,18 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::wyswietl_cyfre(int n){
-    wyswietlona_liczba = (wyswietlona_liczba * 10) + n;
+    if(wyswietlona_liczba != 0 and std::abs(std::log10(wyswietlona_liczba))+1>=8){
+        return;
+    }
+    if(czy_kropka){
+        wyswietlona_liczba = wyswietlona_liczba + (static_cast<double>(n)/(std::pow(10, miejsce_kropki)));
+        miejsce_kropki++;
+    }
+    else {
+        wyswietlona_liczba = (wyswietlona_liczba * 10) + n;
+    }
     ui->wyswietlacz->display(wyswietlona_liczba);
+    blokuj_liczenie = 0;
 }
 
 void MainWindow::on_p0_clicked()
@@ -70,15 +81,76 @@ void MainWindow::on_p9_clicked()
 
 void MainWindow::on_pBack_clicked()
 {
-    wyswietlona_liczba = wyswietlona_liczba / 10;
+    if(static_cast<int>(wyswietlona_liczba) == wyswietlona_liczba){
+    wyswietlona_liczba = (int)wyswietlona_liczba / 10;
+    }
     ui->wyswietlacz->display(wyswietlona_liczba);
 }
 
 void MainWindow::on_pClear_clicked()
 {
     wyswietlona_liczba = 0;
+    czy_kropka = 0;
+    miejsce_kropki = 1;
     kalkulator.kasuj();
     ui->wyswietlacz->display(wyswietlona_liczba);
 }
 
+void MainWindow::oblicz(int tryb)
+{
+    if(!blokuj_liczenie){
+        kalkulator.oblicz(tryb, wyswietlona_liczba);
+    }
+    wyswietlona_liczba = 0;
+    czy_kropka = false;
+    ui->wyswietlacz->display(kalkulator.get());
+    blokuj_liczenie = true;
+}
+
+void MainWindow::on_pKropka_clicked()
+{
+    czy_kropka = 1;
+}
+
+
+void MainWindow::on_pWynik_clicked()
+{
+    oblicz(tryb);
+    tryb = 0;
+    miejsce_kropki = 1;
+    wyswietlona_liczba = kalkulator.get();
+    ui->wyswietlacz->display(wyswietlona_liczba);
+}
+
+void MainWindow::on_pPlus_clicked(){
+    oblicz(tryb);
+    tryb = 1;
+}
+
+void MainWindow::on_pMinus_clicked()
+{
+    oblicz(tryb);
+    tryb = 2;
+}
+
+
+void MainWindow::on_pMnozenie_clicked()
+{
+    oblicz(tryb);
+    tryb = 3;
+}
+
+
+void MainWindow::on_pDziel_clicked()
+{
+    oblicz(tryb);
+    tryb = 4;
+}
+
+
+void MainWindow::on_pModulo_clicked()
+{
+    oblicz(tryb);
+    tryb = 5;
+}
 

@@ -20,12 +20,14 @@ private:
 
     void system(int baza, double wartosc);
 
-    void oblicz(int tryb, double liczba1, double liczba2);
-
     void err(int code);
 
 public:
+    void oblicz(int tryb, double liczba2);
+
     void kasuj();
+
+    bool is_mem_used();
 
     double get();
 

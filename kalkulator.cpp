@@ -39,8 +39,13 @@ void Kalkulator::system(int baza, double wartosc) {
 
 };
 
-void Kalkulator::oblicz(int tryb, double liczba1, double liczba2) {
+
+void Kalkulator::oblicz(int tryb, double liczba2) {
+    double liczba1 = mem;
     switch (tryb) {
+    case 0:
+        mem=liczba2;
+        break;
     case 1:
         mem = add(liczba1, liczba2);
         break;
@@ -83,6 +88,8 @@ void Kalkulator::err(int code) {
     error_occured = 1;
 };
 
+
+
 //Czyszczenie akumulatora
 void Kalkulator::kasuj() {
     mem = 0;
@@ -95,4 +102,12 @@ double Kalkulator::get() {
 
 void Kalkulator::set(double a) {
     mem = a;
+    mem_used = 1;
 };
+
+bool Kalkulator::is_mem_used(){
+    if(mem_used){
+        return true;
+    }
+    return false;
+}
