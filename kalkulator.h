@@ -1,12 +1,12 @@
 #ifndef KALKULATOR_H
 #define KALKULATOR_H
+#include <string>
 
 class Kalkulator {
 
 private:
     double mem; //Akumulator
-    bool mem_used; //Określa czy akumulator jest aktualnie używany
-    bool error_occured; //Czy podczas obliczen wystapil błąd
+    bool mem_used;    //Określa czy akumulator jest aktualnie używany
 
     double add(double a, double b);
 
@@ -18,11 +18,13 @@ private:
 
     double modulo(double a, double b);
 
-    void system(int baza, double wartosc);
+    int system(int baza1, int baza2, double wartosc);
 
-    void err(int code);
+    void err(int kod);
 
 public:
+    int error_occured;
+
     void oblicz(int tryb, double liczba2);
 
     void kasuj();
@@ -32,5 +34,7 @@ public:
     double get();
 
     void set(double a);
+
+    std::string err_msg;
 };
 #endif // KALKULATOR_H

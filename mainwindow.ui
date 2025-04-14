@@ -313,22 +313,40 @@
     <addaction name="actionKonwersje_baz"/>
    </widget>
    <widget class="QMenu" name="menuO_Autorze">
-    <property name="title">
-     <string>O Autorze</string>
+    <property name="acceptDrops">
+     <bool>false</bool>
     </property>
+    <property name="title">
+     <string>Informacje</string>
+    </property>
+    <addaction name="actionO_Autorze"/>
    </widget>
    <addaction name="menuTryb"/>
    <addaction name="menuO_Autorze"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionZwyk_y">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Zwykły</string>
    </property>
   </action>
   <action name="actionKonwersje_baz">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Konwersje baz</string>
+   </property>
+  </action>
+  <action name="actionO_Autorze">
+   <property name="text">
+    <string>O Autorze</string>
    </property>
   </action>
  </widget>

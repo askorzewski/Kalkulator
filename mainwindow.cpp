@@ -26,7 +26,8 @@ void MainWindow::wyswietl_cyfre(int n){
         wyswietlona_liczba = (wyswietlona_liczba * 10) + n;
     }
     ui->wyswietlacz->display(wyswietlona_liczba);
-    blokuj_liczenie = 0;
+    blokuj_liczenie = false;
+    blokuj_cofnij = false;
 }
 
 void MainWindow::on_p0_clicked()
@@ -81,9 +82,13 @@ void MainWindow::on_p9_clicked()
 
 void MainWindow::on_pBack_clicked()
 {
+    if (blokuj_cofnij){
+        return;
+    }
     if(static_cast<int>(wyswietlona_liczba) == wyswietlona_liczba){
     wyswietlona_liczba = (int)wyswietlona_liczba / 10;
     }
+    else
     ui->wyswietlacz->display(wyswietlona_liczba);
 }
 
@@ -103,8 +108,15 @@ void MainWindow::oblicz(int tryb)
     }
     wyswietlona_liczba = 0;
     czy_kropka = false;
+    if(kalkulator.get()>99999999){
+        error("BŁĄD: OVERFLOW");
+    }
     ui->wyswietlacz->display(kalkulator.get());
     blokuj_liczenie = true;
+    blokuj_cofnij = true;
+    if(kalkulator.error_occured){
+        error(kalkulator.err_msg);
+    }
 }
 
 void MainWindow::on_pKropka_clicked()
@@ -120,6 +132,7 @@ void MainWindow::on_pWynik_clicked()
     miejsce_kropki = 1;
     wyswietlona_liczba = kalkulator.get();
     ui->wyswietlacz->display(wyswietlona_liczba);
+    wyswietlona_liczba = 0;
 }
 
 void MainWindow::on_pPlus_clicked(){
@@ -152,5 +165,21 @@ void MainWindow::on_pModulo_clicked()
 {
     oblicz(tryb);
     tryb = 5;
+}
+
+void MainWindow::on_actionO_Autorze_triggered()
+{
+    Popup.setWindowTitle(":3");
+    Popup.setText(":3");
+    Popup.addButton(QMessageBox::Yes);
+    Popup.exec();
+}
+
+void MainWindow::error(std::string msg){
+    on_pClear_clicked();
+    Popup.setWindowTitle("BŁĄD");
+    Popup.setText(QString::fromStdString(msg));
+    Popup.exec();
+
 }
 

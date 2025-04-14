@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
 #include "kalkulator.h"
 
 QT_BEGIN_NAMESPACE
@@ -61,15 +62,23 @@ private slots:
 
     void on_pModulo_clicked();
 
+    void on_actionO_Autorze_triggered();
+
+    void error(std::string msg);
 private:
     //enum Tryb {plus, minus, iloraz, iloczyn, modulo};
     //Tryb tryb;
-    int tryb = 0;
-    bool blokuj_liczenie = 0;
-    Kalkulator kalkulator;
-    bool czy_kropka = 0;
-    int miejsce_kropki = 1;
+
     double wyswietlona_liczba = 0;
+    int tryb = 0;
+    int miejsce_kropki = 1;
+
+    bool blokuj_liczenie = 0;
+    bool blokuj_cofnij = 0;
+    bool czy_kropka = 0;
+
+    QMessageBox Popup;
+    Kalkulator kalkulator;
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

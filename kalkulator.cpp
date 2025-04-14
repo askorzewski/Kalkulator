@@ -35,8 +35,8 @@ double Kalkulator::modulo(double a, double b) {
     return a - static_cast<int>(a / b) * b;
 };
 
-void Kalkulator::system(int baza, double wartosc) {
-
+int Kalkulator::system(int baza1, int baza2, double wartosc) {
+    return 0;
 };
 
 
@@ -61,9 +61,6 @@ void Kalkulator::oblicz(int tryb, double liczba2) {
     case 5:
         mem = modulo(liczba1, liczba2);
         break;
-    case 6:
-        system(liczba1, liczba2);
-        break;
     default:
         err(2);
         break;
@@ -71,29 +68,29 @@ void Kalkulator::oblicz(int tryb, double liczba2) {
 };
 
 //Obsługa błędów
-void Kalkulator::err(int code) {
+void Kalkulator::err(int kod) {
     kasuj();
-    switch (code)
+    switch (kod)
     {
     case 1:
-        std::cerr << "BLAD: Nie mozna podzielic przez zero.";
+        err_msg = "BŁAD: Nie mozna podzielic przez zero.";
         break;
     case 2:
-        std::cerr << "BLAD: Zla operacja.";
+        err_msg = "BŁAD: Nieznana operacja.";
         break;
     default:
+        err_msg = "BŁĄD: Nieznany błąd.";
         break;
     }
-    //std::cout << endl;
+    std::cerr << err_msg;
     error_occured = 1;
 };
-
-
 
 //Czyszczenie akumulatora
 void Kalkulator::kasuj() {
     mem = 0;
     mem_used = 0;
+    error_occured = 0;
 };
 
 double Kalkulator::get() {
