@@ -1,6 +1,6 @@
+#include <iostream>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include <cmath>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,14 +15,23 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::wyswietl_cyfre(int n){
-    if(wyswietlona_liczba != 0 and std::abs(std::log10(wyswietlona_liczba))+1>=8){
+    if(wyswietlona_liczba != 0 and std::abs(std::log10(wyswietlona_liczba))+1>=8){ //Jeśli liczba wykracza poza możliwe miejsca
         return;
     }
-    if(czy_kropka){
+    if(czy_kropka){ //Wpisywanie liczb niecałkowitych
+        if(wyswietlona_liczba == 0 and n == 0){ //Specjalny przypadek: "0.0" - niemożliwe do wyświetlenia przez display(double liczba).
+            QString zero = "0.";
+            for(int i = 0; i < miejsce_kropki; i++){
+                zero.append("0");
+            }
+            miejsce_kropki++;
+            ui->wyswietlacz->display(zero);
+            return;
+        }
         wyswietlona_liczba = wyswietlona_liczba + (static_cast<double>(n)/(std::pow(10, miejsce_kropki)));
         miejsce_kropki++;
     }
-    else {
+    else { //Wpisywanie liczb całkowitych
         wyswietlona_liczba = (wyswietlona_liczba * 10) + n;
     }
     ui->wyswietlacz->display(wyswietlona_liczba);
@@ -88,7 +97,6 @@ void MainWindow::on_pBack_clicked()
     if(static_cast<int>(wyswietlona_liczba) == wyswietlona_liczba){
     wyswietlona_liczba = (int)wyswietlona_liczba / 10;
     }
-    else
     ui->wyswietlacz->display(wyswietlona_liczba);
 }
 
@@ -108,12 +116,13 @@ void MainWindow::oblicz(int tryb)
     }
     wyswietlona_liczba = 0;
     czy_kropka = false;
-    if(kalkulator.get()>99999999){
+    if(kalkulator.get() != 0 and std::abs(std::log10(kalkulator.get()))+1>=8){
         error("BŁĄD: OVERFLOW");
     }
     ui->wyswietlacz->display(kalkulator.get());
     blokuj_liczenie = true;
     blokuj_cofnij = true;
+
     if(kalkulator.error_occured){
         error(kalkulator.err_msg);
     }
@@ -169,9 +178,8 @@ void MainWindow::on_pModulo_clicked()
 
 void MainWindow::on_actionO_Autorze_triggered()
 {
-    Popup.setWindowTitle(":3");
-    Popup.setText(":3");
-    Popup.addButton(QMessageBox::Yes);
+    Popup.setWindowTitle("O Autorze");
+    Popup.setText("Adam Skórzewski \nNumer Indeksu: 287081");
     Popup.exec();
 }
 
@@ -181,5 +189,23 @@ void MainWindow::error(std::string msg){
     Popup.setText(QString::fromStdString(msg));
     Popup.exec();
 
+}
+
+
+void MainWindow::on_actionKonwersje_baz_triggered()
+{
+    QWidget *bazy = new QWidget;
+    ui_bazy.setupUi(bazy);
+    connect (ui_bazy.liczBaza, SIGNAL (clicked()), this, SLOT(system()));
+    bazy->show();
+}
+
+void MainWindow::system()
+{
+    QString strStart = ui_bazy.wartoscStart->text();
+    int bazaStart = ui_bazy.baza2->value();
+    int bazaEnd = ui_bazy.baza1->value();
+    kalkulator.system(bazaStart, bazaEnd, strStart.toInt());
+    ui->wyswietlacz->display(kalkulator.get());
 }
 

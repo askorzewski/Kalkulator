@@ -3,7 +3,10 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <cmath>
 #include "kalkulator.h"
+#include "./ui_bazy.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -65,6 +68,11 @@ private slots:
     void on_actionO_Autorze_triggered();
 
     void error(std::string msg);
+
+    void on_actionKonwersje_baz_triggered();
+
+    void system();
+
 private:
     //enum Tryb {plus, minus, iloraz, iloczyn, modulo};
     //Tryb tryb;
@@ -80,5 +88,6 @@ private:
     QMessageBox Popup;
     Kalkulator kalkulator;
     Ui::MainWindow *ui;
+    Ui::Form ui_bazy;
 };
 #endif // MAINWINDOW_H

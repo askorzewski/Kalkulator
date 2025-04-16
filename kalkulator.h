@@ -1,6 +1,7 @@
 #ifndef KALKULATOR_H
 #define KALKULATOR_H
 #include <string>
+#include <cmath>
 
 class Kalkulator {
 
@@ -18,16 +19,16 @@ private:
 
     double modulo(double a, double b);
 
-    int system(int baza1, int baza2, double wartosc);
-
     void err(int kod);
 
 public:
-    int error_occured;
+    int error_occured = 0;
 
     void oblicz(int tryb, double liczba2);
 
     void kasuj();
+
+    void system(int baza1, int baza2, int liczba);
 
     bool is_mem_used();
 

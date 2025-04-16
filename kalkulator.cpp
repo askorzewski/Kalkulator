@@ -35,11 +35,29 @@ double Kalkulator::modulo(double a, double b) {
     return a - static_cast<int>(a / b) * b;
 };
 
-int Kalkulator::system(int baza1, int baza2, double wartosc) {
-    return 0;
-};
+//Zamiana systeów liczbowych
+void Kalkulator::system(int baza1, int baza2, int liczba){
+    int dec = 0;
+    int wynik = 0;
+    for(int potega = 10; potega>=0; potega--){ //zamiana baza1->dec
+        if(liczba<std::pow(baza1, potega)){
+            continue;
+        }
+        dec += pow(baza1, potega) * static_cast<int>(liczba / std::pow(10, potega));
+        liczba -= std::pow(10, potega) * static_cast<int>(liczba / std::pow(10, potega));
+    }
+    for(int potega = 10; potega>=0; potega--){ //zamiana dec->baza2
+        if(dec<std::pow(baza2, potega)){
+            continue;
+        }
+        wynik += static_cast<int>(dec/std::pow(baza2, potega)) * std::pow(10, potega);
+        dec -= std::pow(baza2, potega) * static_cast<int>(dec/std::pow(baza2, potega));
+    }
+    mem = wynik;
+}
 
 
+//Wykorzystanie funkcji liczących (metoda publiczna)
 void Kalkulator::oblicz(int tryb, double liczba2) {
     double liczba1 = mem;
     switch (tryb) {
@@ -73,10 +91,10 @@ void Kalkulator::err(int kod) {
     switch (kod)
     {
     case 1:
-        err_msg = "BŁAD: Nie mozna podzielic przez zero.";
+        err_msg = "BŁĄD: Nie mozna podzielic przez zero.";
         break;
     case 2:
-        err_msg = "BŁAD: Nieznana operacja.";
+        err_msg = "BŁĄD: Nieznana operacja.";
         break;
     default:
         err_msg = "BŁĄD: Nieznany błąd.";
@@ -86,12 +104,13 @@ void Kalkulator::err(int kod) {
     error_occured = 1;
 };
 
-//Czyszczenie akumulatora
+//Resret kalkulatora do stanu początkowego
 void Kalkulator::kasuj() {
     mem = 0;
     mem_used = 0;
     error_occured = 0;
 };
+
 
 double Kalkulator::get() {
     return mem;
@@ -99,12 +118,5 @@ double Kalkulator::get() {
 
 void Kalkulator::set(double a) {
     mem = a;
-    mem_used = 1;
 };
 
-bool Kalkulator::is_mem_used(){
-    if(mem_used){
-        return true;
-    }
-    return false;
-}
